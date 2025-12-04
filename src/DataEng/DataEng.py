@@ -2,11 +2,15 @@ import requests
 import pandas as pd
 import os
 class DataEng():
-    def load(self, code:int, start_date:str, end_date:str):
+    def __init__(self, code:int, start_date:str, end_date:str):
+        self.code = code
+        self.start_date = start_date
+        self.end_date = end_date
+    def load(self):
         """"
             para setar as datas, deve se usar o formato dia/mes/ano. Ex: 01/01/2000 - dia 1 de janeiro de 2000
         """
-        url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{code}/dados?formato=json&dataInicial={start_date}&dataFinal={end_date}'
+        url = f'https://api.bcb.gov.br/dados/serie/bcdata.sgs.{self.code}/dados?formato=json&dataInicial={self.start_date}&dataFinal={self.end_date}'
         response = requests.get(url)
         if response.status_code == 200:
             try:
@@ -18,14 +22,12 @@ class DataEng():
                 print(f'Erro: {e} |  {response.status_code} | {response.text}')
                 return None
     def feature_eng(self):
-        json = self.data
-        self.df = pd.DataFrame(json)
-        if 'data' in self.df:
-            try:
-                self.df['data'] = pd.to_datetime(self.df['data'])
-            except ValueError as value_e:
-                print(f'Erro: {value_e}')
-                return None
+        self.df = pd.DataFrame(self.data)
+        try:
+            self.df['data'] = pd.to_datetime(self.df['data'])
+        except ValueError as value_e:
+            print(f'Erro: {value_e}')
+            return None
         if 'valor' in self.df:
             try:
                 self.df['valor'] = pd.to_numeric(self.df['valor'], errors='coerce')
