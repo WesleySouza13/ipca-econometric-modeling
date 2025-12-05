@@ -16,17 +16,13 @@ import joblib
 train_start = '01/01/2000'
 train_end = '31/12/2024'
 # %%
-def load_train(start, end):
+def load_data(start, end):
     eng = DataEng(433,start, end)
     eng.load()
     return eng.feature_eng()
 
-def load_test(start, end):
-    eng = DataEng(433, start, end)
-    eng.load()
-    return eng.feature_eng()
 # %%
-train = load_train(train_start, train_end)
+train = load_data(train_start, train_end)
 train
 # %%
 for i in range(1, 5):
@@ -97,4 +93,35 @@ plt.figure(figsize=(10,5))
 plt.title('residuo entre a serie real e o previsto')
 plt.plot(residual, color='red', marker='o', linestyle='None')
 plt.show()
+# %%
+test_start = '01/01/2025'
+test_end = '04/12/2025'
+test = load_data(test_start, test_end)
+test['lag_1'] = test['valor'].shift(1)
+test['lag_1'] = test['lag_1'].fillna(0)
+test.isnull().sum()
+# %%
+X_test = test['lag_1']
+y_test = test['valor']
+# %%
+y_pred = model.predict(X_test)
+# %%
+print(model.summary())
+# %%
+plt.figure(figsize=(10,5))
+plt.title('Serie real - IPCA X previsto teste')
+plt.plot(X_test, label='IPCA', color='blue')
+plt.plot(y_pred, label='previsto', color='red')
+plt.tight_layout()
+plt.legend()
+plt.show()
+# %%
+residual_test = (y_test-y_pred)
+plt.figure(figsize=(10,5))
+plt.title('residuo entre o teste e o previsto')
+plt.plot(residual_test, color='red', marker='o', linestyle='None')
+plt.show()
+# %%
+metrics_test = Metrics(y_pred, y_test).metrics()
+print(metrics_test)
 # %%
