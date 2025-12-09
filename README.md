@@ -30,3 +30,31 @@ O gráfico de média móvel com janela de 28 dias, escolhida para ilustrar o com
   <img width="628" height="469" alt="image" src="https://github.com/user-attachments/assets/e26facc6-8ae9-46b6-80de-a9793b3df2f0" />
 Analisando o gráfico de autocorrelação, observa-se o que já havia sido identificado anteriormente: a série não apresenta constância temporal, mas sim variações ao longo do tempo. Essas características devem ser consideradas, pois impactam diretamente a capacidade do modelo de lidar com mudanças e flutuações nos dados.
 Optou-se por não tratar os ciclos e diferenças temporais, com o objetivo de treinar o modelo utilizando os dados em seu estado original, assumindo, consequentemente, a presença de erros de estimativa e menor variabilidade nas previsões.
+
+# Aplicação da Transformada de Fourier para desconvolução do sinal
+
+Para visualizar e analisar os picos presentes na série, aplicou-se a Transformada de Fourier ao sinal. Dessa forma, é possível reduzir o ruído e identificar apenas os picos mais significativos. Observa-se que os picos correspondem às componentes de maior energia do sinal, permitindo destacar os ciclos mais relevantes e suas variações ao longo do tempo.
+
+Sinal decomposto: 
+
+<img width="985" height="388" alt="image" src="https://github.com/user-attachments/assets/30e800f1-82df-4f60-852c-a88882aebf6f" />
+
+Frequências Significativas: 
+
+<img width="988" height="382" alt="image" src="https://github.com/user-attachments/assets/3c9e1575-693e-4842-a05f-d955379ee1d6" />
+
+Observa-se a ocorrência de alguns picos significativos ao longo do tempo, indicando que o índice apresentou variações bruscas em determinados períodos.
+
+# Aplicando Atrasos 
+
+Para trabalhar com previsão em séries temporais, é necessário considerar que o modelo será treinado para prever com base em comportamentos passados. Com esse objetivo, realizou-se um teste de janelamento de ordem 1 sobre o alvo, a fim de comparar a autocorrelação do sinal com o do sinal original e de seus resíduos. Os resultados obtidos foram os seguintes:
+
+<img width="630" height="470" alt="image" src="https://github.com/user-attachments/assets/b8665bbb-43b8-493b-ae2b-7a667447bdb7" />
+
+<img width="496" height="496" alt="image" src="https://github.com/user-attachments/assets/12b24d47-c521-4c7f-b594-83bda83d9f31" />
+
+
+
+
+
+
