@@ -20,3 +20,7 @@ Estaremos explorando a coluna "valor", que será o alvo do estudo
 # Média Movel 
 
 <img width="988" height="486" alt="image" src="https://github.com/user-attachments/assets/ba59e5ac-80ac-46b5-b41c-88c2c050c0b2" />
+
+Pelo próprio sinal, observa-se um comportamento esperado: volatilidade. Essa característica se confirma a partir das variações evidenciadas no gráfico de sazonalidade, indicando que a série não é estacionária, ou seja, seus padrões de comportamento variam ao longo do tempo e entre ciclos.
+
+O gráfico de média móvel com janela de 28 dias, escolhida para ilustrar o comportamento mensal da série, revela pequenas flutuações ao longo do tempo. Isso demonstra que o sinal é fortemente influenciado por mudanças durante os ciclos, reforçando a presença de variabilidade temporal significativa.
