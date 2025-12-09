@@ -53,6 +53,16 @@ Para trabalhar com previsão em séries temporais, é necessário considerar que
 
 <img width="496" height="496" alt="image" src="https://github.com/user-attachments/assets/12b24d47-c521-4c7f-b594-83bda83d9f31" />
 
+Repare na distribuição dos residuos: 
+
+<img width="841" height="451" alt="image" src="https://github.com/user-attachments/assets/04029cc7-ea82-44a7-83e0-561de4f1a076" />
+
+Os resíduos obtidos a partir do uso de atrasos apresentam uma distribuição próxima da normal, o que é relevante para a inferência do modelo por diversos motivos. Primeiramente, muitos métodos de regressão, incluindo mínimos quadrados, assumem que os erros seguem uma distribuição normal para que testes estatísticos, como intervalos de confiança e testes de hipótese sobre os coeficientes, sejam válidos. Em segundo lugar, a normalidade dos resíduos indica que o modelo captura adequadamente o padrão central da série mesmo ao considerar os atrasos, sem apresentar viés sistemático ou padrões não modelados. Por fim, resíduos aproximadamente normais permitem que previsões e intervalos de confiança gerados pelo modelo sejam mais confiáveis.
+
+<img width="989" height="490" alt="image" src="https://github.com/user-attachments/assets/b31f778a-4629-4bfc-b7d3-43f50f7ba917" />
+
+
+
 
 
 
