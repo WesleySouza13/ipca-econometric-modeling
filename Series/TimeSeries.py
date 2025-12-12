@@ -62,3 +62,9 @@ acorr_ljungbox(residual)
 fft = Fft(df['valor'], fs=620)
 fft.fft()
 # %%
+plt.figure(figsize=(10,5))
+plt.title('Distribuiçao dos residuos')
+sns.histplot(residual, kde=True, label='residuo')
+plt.legend()
+plt.show()
+# %%

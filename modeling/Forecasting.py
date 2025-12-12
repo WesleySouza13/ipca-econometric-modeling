@@ -16,8 +16,9 @@ from statsmodels.tsa.statespace.sarimax import SARIMAX
 from pmdarima import auto_arima
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import AdaBoostRegressor, HistGradientBoostingRegressor, RandomForestRegressor
-
-
+from statsmodels.stats.diagnostic import het_breuschpagan
+from statsmodels.stats.stattools import jarque_bera
+import statsmodels.api as sm
 # %%
 # vou usar dados de 2000 até 31/12/2024 para treinar e o restante até a ultima serie para testar
 train_start = '01/01/2000'
@@ -111,8 +112,6 @@ plt.figure(figsize=(10,5))
 plt.title('residuo entre o teste e o previsto')
 plt.plot(residual_test, color='red', marker='o', linestyle='None')
 plt.show()
-
-model_ols.plot_residuals()
 # %% 
 
 """"
@@ -211,7 +210,6 @@ for idx, (name, model) in enumerate(models.items()):
     y_pred_train = model.predict(X_train)
     metrics_obj = Metrics(y_pred_train, y_train)
     metrics_train = metrics_obj.metrics()
-    list_metrics.append(metrics_train)
     print(f'metricas de treino [{name}]:', metrics_train)
     
     ax = axes[idx]
@@ -247,7 +245,6 @@ plt.show()
     Mesmo parecendo um modelo mais simples comparado aos outros testados, o modelo de minimos quadrados se mostrou melhor em captar as variaçoes dos dados
     Fiz testes como modelos do tipo ARMA e modelo de machine learning convencionais, e, mesmo com a diferença de robustez matematica e computacional, o OLS trouxe maior confiabilidade em suas previsoes
     ainda com um R^2 baixo, porem, comum no tipo de dado que estamos trabalhando. Com isso, devo seguir com o estudo em cima desse modelo"""
-joblib.dump(model_ols, 'OLS.pkl')
 # %%
 plt.figure(figsize=(10,5))
 plt.title('Serie real - IPCA X previsto teste')
@@ -256,4 +253,46 @@ plt.plot(y_pred, label='previsto', color='red', marker='o', linestyle='none')
 plt.tight_layout()
 plt.legend()
 plt.show()
+# %%
+residual_test_ols = y_pred_test - y_test
+plt.figure(figsize=(10,8))
+plt.title('Residuos da previsao - OLS')
+sns.histplot(residual_test_ols, kde=True, label=f'media: {residual_test_ols.mean()} | std: {residual_test_ols.std()}')
+plt.legend()
+plt.grid()
+plt.show()
+# %%
+#teste de heterocedasticidade para verivicar se os residuos nao é constante 
+def heteroscedasticity(residual: float, X:pd.Series):
+    lm_stat, lm_pvalue, f_stat, f_pvalue = het_breuschpagan(residual, X, robust=True)
+    out = {
+        'lm_stats':lm_stat, 
+        'lm_pvalue':lm_pvalue,
+        'f_stat': f_stat,
+        'f_pvalue': f_pvalue
+        }
+    return pd.DataFrame([out])
+        
+
+# %%
+heteroscedasticity(residual_test_ols, X_test)
+# %%
+plt.figure(figsize=(10,8))
+plot_acf(residual_test_ols)
+plt.title('autocorrelaçao dos residuos - Previsao OLS')
+
+# %%
+def normal_test(residual_test:float):
+    jb_stat, pvalue_j, skew, kurt = jarque_bera(residual_test)
+    out = {
+        'pvalue': pvalue_j,
+        'jb_stat':jb_stat, 
+        'skew':skew,
+        'kurt':kurt
+    }
+    plt.figure(figsize=(10,8))
+    sm.qqplot(residual_test, line='45')
+    print(out)
+# %%
+normal_test(residual_test_ols)
 # %%
