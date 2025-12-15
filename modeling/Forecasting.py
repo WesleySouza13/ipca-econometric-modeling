@@ -59,7 +59,7 @@ plot_autocorrelation(train)
 # %%
 """"notas: apenas o primeiro lag foi significativo e capaz de passar as informaçoes e variaçoes temporais para o modelo
 irei trabalhar apenas com 1 atraso agora, e farei alguns testes
-    tirei essas conclusoes fazendo testes de forma separda
+    tirei essas conclusoes fazendo testes de forma separada
 """
 X_train = sm.add_constant(train['lag_1'])
 y_train = train['valor']

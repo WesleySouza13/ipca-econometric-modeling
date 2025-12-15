@@ -2,6 +2,8 @@ import streamlit as st
 from src.DataEng.DataRequests import DataRequest
 import pandas as pd
 import plotly.express as px
+from datetime import date
+from model.TrainPred import train_pred
 #from src.analytics.SerieDecomposition import SerieDecomposer
 
 st.set_page_config(page_title='Modelagem IPCA', page_icon='📈') # talvez eu mude o titulo da pg
@@ -84,5 +86,18 @@ if df is not None and not df.empty:
                     height=350
                 )
                 st.plotly_chart(fig_sazo)
-    #if option == 'Prever':
-        
+    if option == 'Prever':
+        window_pred_1 = st.date_input('janelamento para previsão [inicio]', min_value='2000-01-01')
+        window_pred_2 = st.date_input('janelamento para previsão [final]', min_value='2001-01-01')
+        if window_pred_1 and window_pred_2:
+            st.text(f'Você irá infererir sobre a janela de {window_pred_1} e {window_pred_2}')
+            data_value = dataframe_req(code=code, start=window_pred_1, limit=window_pred_2)
+            if data_value.empty:
+                st.text('Escolha uma janelamento válido!')
+            else:
+                st.dataframe(data_value)
+                st.text('Iniciando inferencia:')
+                st.text('Nota: Quanto maior a janela para a inferencia, melhores serão as previsões do modelo. Com isso, escolha um melhor janelamento. ')
+                model = train_pred(data_value).fit()
+                st.text(model.inference())
+            
