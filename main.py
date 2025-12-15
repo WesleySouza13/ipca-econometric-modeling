@@ -4,6 +4,7 @@ import pandas as pd
 import plotly.express as px
 from datetime import date
 from model.TrainPred import train_pred
+import numpy as np
 #from src.analytics.SerieDecomposition import SerieDecomposer
 
 st.set_page_config(page_title='Modelagem IPCA', page_icon='📈') # talvez eu mude o titulo da pg
@@ -99,5 +100,31 @@ if df is not None and not df.empty:
                 st.text('Iniciando inferencia:')
                 st.text('Nota: Quanto maior a janela para a inferencia, melhores serão as previsões do modelo. Com isso, escolha um melhor janelamento. ')
                 model = train_pred(data_value).fit()
-                st.text(model.inference())
-            
+                y_pred = model.inference()
+                fig_pred = px.line(y=data_value['valor'], x=data_value['data'], labels={'x':'Data', 'y':'Valor'})
+                fig_pred.update_layout(
+                    width=500,
+                    height=350
+                )
+                fig_pred.add_scatter(
+                    x=[data_value['data'].iloc[-1]],
+                    y=[y_pred],
+                    mode='markers',
+                    marker=dict(color='red', size=10),
+                    name='Previsão'
+                )
+
+                fig_pred.update_layout(
+                    width=500,
+                    height=350,
+                    title='Série observada + previsão'
+                )
+
+                st.plotly_chart(fig_pred, use_container_width=True)
+                st.text(f'O Proximo valor para o IPCA será: {np.round(y_pred, 3)}')
+                metrics_option = st.selectbox('deseja vizualizar as métricas do modelo?',
+                                            ('Sim', 'Não'))
+                if metrics_option == 'Não':
+                    st.text('Agradeço por utilizar o meu APP!')
+                else:
+                    st.text(model.metrics())

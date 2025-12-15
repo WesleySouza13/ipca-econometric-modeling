@@ -1,7 +1,7 @@
 from statsmodels.regression.linear_model import OLS
 import pandas as pd
 import statsmodels.api as sm
-import numpy as np
+from modeling.Metrics import Metrics
 class train_pred:
     def __init__(self, data: pd.DataFrame):
         self.data = data.copy()
@@ -13,10 +13,8 @@ class train_pred:
         df = self.data.copy()
         df['lag_1'] = df['valor'].shift(1)
         df = df.dropna()
-
         X = sm.add_constant(df['lag_1'])
         y = df['valor']
-
         self.model = OLS(y, X).fit()
         return self
 
@@ -30,3 +28,5 @@ class train_pred:
             columns=exog_names
         )
         return float(self.model.predict(X_last).iloc[0])
+    def metrics(self):
+        return self.model.summary()
