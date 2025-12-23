@@ -69,6 +69,30 @@ Para validar estatisticamente minhas hipóteses, apliquei o teste de portmanteau
 
 # Rodando Modelo de Minimos Quadrados
 
+Foram realizados os primeiros testes utilizando um modelo de Regressao por Minimos Quadrados Ordinarios (OLS). Inicialmente, o desempenho foi insatisfatorio, com um R2 em torno de 0.38.
+
+Diante desse resultado, foram avaliados outros modelos, incluindo abordagens da familia ARMA (ARIMA e SARIMA) e modelos de Machine Learning convencionais. Contudo, ao serem aplicados aos dados, esses modelos nao conseguiram capturar adequadamente as variacoes da serie, apresentando, em alguns casos, R2 negativo, residuos de previsao com comportamento nao normal e outras instabilidades.
+
+Em funcao desses resultados, optou-se por manter o modelo de Minimos Quadrados, apesar do R2 relativamente baixo. Esse problema foi mitigado por meio de uma estrategia de retreinamento dinamico do modelo a cada requisicao, considerando o intervalo de dados definido pelo cliente ou usuario, o que permitiu maior aderencia as caracteristicas locais dos dados.
+
+
+<img width="749" height="627" alt="image" src="https://github.com/user-attachments/assets/f952a578-dc00-4a06-9f44-45eb7e9d585d" />\
+
+Ao analisar o histograma dos residuos, vemos que nao temos amostras o suficiente para determinar se os residuos seguem uma normalidade, afim de decidir se o modelo contem heterocedasticidade ou homocedasticidade. Com isso, realizei outros testes para verificar isso, como o teste de hipoteses. Com isso, usando uma confiança de 95%, validei que as previsoes seguem a normalidade. 
+
+Usei um atraso de 1 periodo para trabalhar nessa série, pois os demais testados (4 atrasos) nao apresentaram significancia na inferencia do modelo. Com isso, trabalhei com um modelo AR de ordem 1. 
+
+Segue as métricas do modelo: 
+
+  coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.1866      0.029      6.487      0.000       0.130       0.243
+lag_1          0.6223      0.045     13.678      0.000       0.533       0.712
+==============================================================================
+Omnibus:                       87.113   Durbin-Watson:                   2.076
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              662.415
+Skew:                           0.954   Prob(JB):                    1.44e-144
+Kurtosis:                      10.038   Cond. No.                         3.29
 
 
 
