@@ -78,13 +78,14 @@ Em funcao desses resultados, optou-se por manter o modelo de Minimos Quadrados, 
 
 <img width="749" height="627" alt="image" src="https://github.com/user-attachments/assets/f952a578-dc00-4a06-9f44-45eb7e9d585d" />\
 
-Ao analisar o histograma dos residuos, vemos que nao temos amostras o suficiente para determinar se os residuos seguem uma normalidade, afim de decidir se o modelo contem heterocedasticidade ou homocedasticidade. Com isso, realizei outros testes para verificar isso, como o teste de hipoteses. Com isso, usando uma confiança de 95%, validei que as previsoes seguem a normalidade. 
+Ao analisar o histograma dos resíduos, vemos que não temos amostras suficientes para determinar se os resíduos seguem uma normalidade, a fim de decidir se o modelo contém heterocedasticidade ou homocedasticidade. Com isso, realizei outros testes para verificar essa propriedade, como testes de hipóteses. Assim, utilizando um nível de confiança de 95%, validei que as previsões seguem a normalidade.
 
-Usei um atraso de 1 periodo para trabalhar nessa série, pois os demais testados (4 atrasos) nao apresentaram significancia na inferencia do modelo. Com isso, trabalhei com um modelo AR de ordem 1. 
+Utilizei um atraso de 1 período para trabalhar nessa série, pois os demais testados (4 atrasos) não apresentaram significância na inferência do modelo. Com isso, trabalhei com um modelo AR de ordem 1.
 
-Segue as métricas do modelo: 
+Seguem as métricas do modelo:
 
-  coef    std err          t      P>|t|      [0.025      0.975]
+
+coef    std err          t      P>|t|      [0.025      0.975]
 ------------------------------------------------------------------------------
 const          0.1866      0.029      6.487      0.000       0.130       0.243
 lag_1          0.6223      0.045     13.678      0.000       0.533       0.712
