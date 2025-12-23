@@ -12,19 +12,19 @@ O cálculo do IPCA baseia-se na coleta sistemática de preços de uma cesta repr
 
 De forma resumida, o processo de cálculo ocorre conforme as seguintes etapas:
 
-Definição da cesta de produtos e serviços
+Definição da cesta de produtos e serviços:
 O IBGE define a cesta de consumo a partir da Pesquisa de Orçamentos Familiares (POF), que identifica a estrutura de gastos das famílias brasileiras. Essa cesta é composta por nove grandes grupos de consumo, cujos itens representam os padrões médios de consumo da população-alvo.
 
-Coleta mensal de preços
+Coleta mensal de preços:
 A coleta de preços é realizada mensalmente, geralmente entre os dias 1º e 30 de cada mês. Aproximadamente 430 mil preços são coletados em cerca de 30 mil estabelecimentos comerciais, domicílios e prestadores de serviços, distribuídos em 13 regiões metropolitanas e áreas urbanas do país.
 
-Cálculo das variações de preços
+Cálculo das variações de preços:
 Para cada item da cesta, calcula-se a variação percentual de preços em relação ao período anterior. Essas variações capturam os aumentos ou reduções observados nos preços ao consumidor.
 
-Ponderação dos itens
+Ponderação dos itens:
 As variações de preços são ponderadas de acordo com a importância relativa de cada item no orçamento das famílias, conforme definido pela POF. Grupos como Transportes e Habitação possuem pesos mais elevados, enquanto itens como Comunicação tendem a apresentar menor participação relativa.
 
-Cálculo da média ponderada
+Cálculo da média ponderada:
 A soma das variações ponderadas resulta no valor final do IPCA do período, que expressa a variação média do custo de vida da população considerada.
 
 Essa metodologia confere ao IPCA uma forte dependência temporal e estrutural, uma vez que o índice é resultado da agregação ponderada de múltiplos subcomponentes com dinâmicas próprias. Essa característica justifica o uso de modelos econométricos e de séries temporais para análise, decomposição e previsão do comportamento do índice ao longo do tempo.
